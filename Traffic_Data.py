@@ -1,141 +1,198 @@
 intersections = {
-    "INT1":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50}, # Lane 1 Northbound - Left turn and striaght ahead
-            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50}, # Lane 2 Northbound - Straight Ahead
+    "INT1":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
+            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
             
-            "SB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50}, # Lane 1 Southbound - Left turn and striaght ahead
-            "SB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50}, # Lane 2 Southbound - Straight Ahead
+            "SB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
+            "SB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
 
-            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50}, # Lane 1 Eastbound - Left turn and striaght ahead            
-            "EB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50}, # Lane 2 Eastbound - Striaght ahead     
+            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},         
+            "EB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},
             
-            "WB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50}, # Lane 1 Westbound - Left turn and striaght ahead
-            "WB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50}, # Lane 2 Westbound - Striaght ahead            
+            "WB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},
+            "WB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},          
             
             "CURRENT PHASE":"MAIN ROAD"
             },
-    "INT2":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150}, # Lane 1 Northbound - Left turn and striaght ahead
-            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150}, # Lane 2 Northbound - Straight Ahead
+    "INT2":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
+            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
             
-            "SB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150}, # Lane 1 Southbound - Left turn and striaght ahead
-            "SB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150}, # Lane 2 Southbound - Straight Ahead
+            "SB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
+            "SB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
 
-            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25}, # Lane 1 Eastbound - Left turn and striaght ahead   
-            "WB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25}, # Lane 1 Westbound - Left turn and striaght ahead         
+            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25},
+            "WB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25},      
             
             "CURRENT PHASE":"MAIN ROAD"
             },  
-    "INT3":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150}, # Lane 1 Northbound - Left turn and striaght ahead
-            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150}, # Lane 2 Northbound - Straight Ahead
+    "INT3":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
+            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
             
-            "SB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50}, # Lane 1 Southbound - Left turn and striaght ahead
-            "SB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50}, # Lane 2 Southbound - Straight Ahead
+            "SB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
+            "SB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
 
-            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25}, # Lane 1 Eastbound - Left turn and striaght ahead   
-            "WB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25}, # Lane 1 Westbound - Left turn and striaght ahead       
+            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25},  
+            "WB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25}, 
             
             "CURRENT PHASE":"MAIN ROAD"
             },  
-    "INT4":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150}, # Lane 1 Northbound - Left turn
-            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150}, # Lane 2 Northbound - Right turn
+    "INT4":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
+            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
 
-            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50}, # Lane 1 Eastbound - Striaght ahead            
-            "EB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50}, # Lane 2 Eastbound - Right turn
+            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},        
+            "EB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},
             
-            "WB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50}, # Lane 1 Westbound - Left turn
-            "WB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50}, # Lane 2 Westbound - Straight ahead
+            "WB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
+            "WB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},
             
             "CURRENT PHASE":"MAIN ROAD"
             }    
     }
 
-traffic_demand = {
-    "INT1":{"NB_LANE_1":{"ARRIVAL_WEIGHT": 0.15}, # Lane 1 Northbound - Left turn and striaght ahead
-            "NB_LANE_2":{"ARRIVAL_WEIGHT": 0.5}, # Lane 2 Northbound - Straight Ahead
-            
-            "SB_LANE_1":{"ARRIVAL_WEIGHT": 0}, # Lane 1 Southbound - Left turn and striaght ahead
-            "SB_LANE_2":{"ARRIVAL_WEIGHT": 0}, # Lane 2 Southbound - Straight Ahead
-
-            "EB_LANE_1":{"ARRIVAL_WEIGHT": 0.125}, # Lane 1 Eastbound - Left turn and striaght ahead            
-            "EB_LANE_2":{"ARRIVAL_WEIGHT": 0.0125}, # Lane 2 Eastbound - Striaght ahead     
-            
-            "WB_LANE_1":{"ARRIVAL_WEIGHT": 0.0125}, # Lane 1 Westbound - Left turn and striaght ahead
-            "WB_LANE_2":{"ARRIVAL_WEIGHT": 0.025}, # Lane 2 Westbound - Striaght ahead       
+entry_prob = {
+    "INT1":{"NB_LANE_1":{"ARRIVAL_WEIGHT": 0.15},
+            "NB_LANE_2":{"ARRIVAL_WEIGHT": 0.5}, 
+            "EB_LANE_1":{"ARRIVAL_WEIGHT": 0.125},
+            "EB_LANE_2":{"ARRIVAL_WEIGHT": 0.0125},
+            "WB_LANE_1":{"ARRIVAL_WEIGHT": 0.0125},
+            "WB_LANE_2":{"ARRIVAL_WEIGHT": 0.025},
             },
     
-    "INT2":{"NB_LANE_1":{"ARRIVAL_WEIGHT": 0}, # Lane 1 Northbound - Left turn and striaght ahead
-            "NB_LANE_2":{"ARRIVAL_WEIGHT": 0}, # Lane 2 Northbound - Straight Ahead
-            
-            "SB_LANE_1":{"ARRIVAL_WEIGHT": 0}, # Lane 1 Southbound - Left turn and striaght ahead
-            "SB_LANE_2":{"ARRIVAL_WEIGHT": 0}, # Lane 2 Southbound - Straight Ahead
-
-            "EB_LANE_1":{"ARRIVAL_WEIGHT": 0.0125}, # Lane 1 Eastbound - Left turn and striaght ahead   
-            "WB_LANE_1":{"ARRIVAL_WEIGHT": 0.025}, # Lane 1 Westbound - Left turn and striaght ahead     
+    "INT2":{"EB_LANE_1":{"ARRIVAL_WEIGHT": 0.0125},
+            "WB_LANE_1":{"ARRIVAL_WEIGHT": 0.025},
             }, 
     
-    "INT3":{"NB_LANE_1":{"ARRIVAL_WEIGHT": 0}, # Lane 1 Northbound - Left turn and striaght ahead
-            "NB_LANE_2":{"ARRIVAL_WEIGHT": 0}, # Lane 2 Northbound - Straight Ahead
-            
-            "SB_LANE_1":{"ARRIVAL_WEIGHT": 0}, # Lane 1 Southbound - Left turn and striaght ahead
-            "SB_LANE_2":{"ARRIVAL_WEIGHT": 0}, # Lane 2 Southbound - Straight Ahead
-
-            "EB_LANE_1":{"ARRIVAL_WEIGHT": 0.025}, # Lane 1 Eastbound - Left turn and striaght ahead   
-            "WB_LANE_1":{"ARRIVAL_WEIGHT": 0.0125}, # Lane 1 Westbound - Left turn and striaght ahead       
+    "INT3":{"EB_LANE_1":{"ARRIVAL_WEIGHT": 0.025},
+            "WB_LANE_1":{"ARRIVAL_WEIGHT": 0.0125},     
             }, 
     
-    "INT4":{"NB_LANE_1":{"ARRIVAL_WEIGHT": 0}, # Lane 1 Northbound - Left turn
-            "NB_LANE_2":{"ARRIVAL_WEIGHT": 0}, # Lane 2 Northbound - Right turn
-
-            "EB_LANE_1":{"ARRIVAL_WEIGHT": 0.025}, # Lane 1 Eastbound - Striaght ahead            
-            "EB_LANE_2":{"ARRIVAL_WEIGHT": 0.025}, # Lane 2 Eastbound - Right turn
-            
-            "WB_LANE_1":{"ARRIVAL_WEIGHT": 0.25}, # Lane 1 Westbound - Left turn
-            "WB_LANE_2":{"ARRIVAL_WEIGHT": 0.05}, # Lane 2 Westbound - Straight ahead
+    "INT4":{"EB_LANE_1":{"ARRIVAL_WEIGHT": 0.025},     
+            "EB_LANE_2":{"ARRIVAL_WEIGHT": 0.025},
+            "WB_LANE_1":{"ARRIVAL_WEIGHT": 0.25},
+            "WB_LANE_2":{"ARRIVAL_WEIGHT": 0.05},
             }    
     }
+
+exit_prob = {
+    "INT1":{"NB_LANE_1":{"INT1_WB_LANE_1_EXT": 0.15,
+                        "INT2_WB_LANE_1_EXT": 0,
+                        "INT3_WB_LANE_1_EXT": 0,
+                        "INT4_WB_LANE_1_EXT": 0,
+                        "INT4_EB_LANE_2_EXT": 0,
+                        },
+            "NB_LANE_2":{"INT4_WB_LANE_1_EXT": 0,
+                        "INT4_EB_LANE_2_EXT": 0,
+                                },
+            "EB_LANE_1":{"INT1_EB_LANE_1_EXT": 0.15,
+                        "INT2_WB_LANE_1_EXT": 0,
+                        "INT3_WB_LANE_1_EXT": 0,
+                        "INT4_WB_LANE_1_EXT": 0,
+                        "INT4_EB_LANE_2_EXT": 0,
+                        },
+            "EB_LANE_2":{"INT1_EB_LANE_2_EXT": 0,
+                                 },
+            "WB_LANE_1":{"INT1_WB_LANE_1_EXT": 0.15,
+                        "INT1_SB_LANE_1_EXT": 0,
+                        },
+            "WB_LANE_2":{"INT1_WB_LANE_2_EXT": 0,
+                                 },     
+            },
+    
+    "INT2":{"EB_LANE_1":{"INT2_EB_LANE_1_EXT": 0,
+                        "INT3_WB_LANE_1_EXT": 0,
+                        "INT4_WB_LANE_1_EXT": 0,
+                        "INT4_EB_LANE_2_EXT": 0,
+                        },
+            "WB_LANE_1":{"INT2_WB_LANE_1_EXT": 0.15,
+                        "INT1_SB_LANE_1_EXT": 0,
+                        "INT1_SB_LANE_2_EXT": 0,
+                        "INT1_EB_LANE_1_EXT": 0.15,
+                        },   
+            },  
+    "INT3":{"EB_LANE_1":{"INT3_EB_LANE_1_EXT": 0,
+                        "INT4_WB_LANE_1_EXT": 0,
+                        "INT4_EB_LANE_2_EXT": 0,
+                        },
+            "WB_LANE_1":{"INT2_WB_LANE_1_EXT": 0.15,
+                        "INT1_SB_LANE_1_EXT": 0,
+                        "INT1_SB_LANE_2_EXT": 0,
+                        "INT1_EB_LANE_1_EXT": 0.15,
+                        },   
+            },
+    "INT4":{"EB_LANE_1":{"INT4_EB_LANE_2_EXT": 0,
+                        },
+            "EB_LANE_2":{"INT4_EB_LANE_2_EXT": 0,
+                        "INT3_EB_LANE_1_EXT": 0,
+                        "INT2_EB_LANE_1_EXT": 0,
+                        "INT1_EB_LANE_1_EXT": 0.15,
+                        "INT1_SB_LANE_1_EXT": 0,
+                        "INT1_SB_LANE_2_EXT": 0,
+                        },
+            "WB_LANE_1":{"INT4_WB_LANE_1_EXT": 0,
+                        "INT3_EB_LANE_1_EXT": 0,
+                        "INT2_EB_LANE_1_EXT": 0,
+                        "INT1_EB_LANE_1_EXT": 0.15,
+                        "INT1_SB_LANE_1_EXT": 0,
+                        "INT1_SB_LANE_2_EXT": 0,
+                        },   
+            "WB_LANE_2":{"INT4_WB_LANE_2_EXT": 0
+                        },  
+            },
+    }
+
 
 connections = {
-    # Northbound connections
-    ("INT1", "NB_LANE_1"):("INT2", "NB_LANE_1"),
-    ("INT1", "NB_LANE_2"):("INT2", "NB_LANE_2"),
-    ("INT2", "NB_LANE_1"):("INT3", "NB_LANE_1"),
+    # Intersection 1:
+    # Northbound
+    ("INT1", "NB_LANE_1"):[("INT2", "NB_LANE_1"), "INT1_WB_LANE_1_EXT"],
+    ("INT1", "NB_LANE_2"):("INT2", "NB_LANE_2"), 
+    # Southbound
+    ("INT1", "SB_LANE_1"):[("INT1", "SB_LANE_1_EXT"), "INT1_EB_LANE_1_EXT"],
+    ("INT1", "SB_LANE_2"):"INT1_SB_LANE_2_EXT",  
+    # Eastbound
+    ("INT1", "EB_LANE_1"):[("INT2", "NB_LANE_1"), "INT1_EB_LANE_1_EXT"],
+    ("INT1", "EB_LANE_2"):"INT1_EB_LANE_2_EXT",
+    # Westbound
+    ("INT1", "WB_LANE_1"):[("INT1_SB_LANE_1_EXT"), "INT1_WB_LANE_1_EXT"],    
+    ("INT1", "WB_LANE_2"):"INT1_WB_LANE_2_EXT", 
+    
+    # Intersection 2:
+    # Northbound
+    ("INT2", "NB_LANE_1"):[("INT3", "NB_LANE_1"), "INT2_WB_LANE_1_EXT"],
     ("INT2", "NB_LANE_2"):("INT3", "NB_LANE_2"),
-    ("INT3", "NB_LANE_1"):("INT4", "NB_LANE_1"),
+    # Southbound
+    ("INT2", "SB_LANE_1"):[("INT1", "SB_LANE_1"), "INT2_EB_LANE_1_EXT"],
+    ("INT2", "SB_LANE_2"):("INT1", "SB_LANE_2"),    
+    # Eastbound
+    ("INT2", "EB_LANE_1"):[("INT3", "NB_LANE_1"), "INT2_EB_LANE_1_EXT"],
+    # Westbound       
+    ("INT2", "WB_LANE_1"):[("INT1", "SB_LANE_1"), "INT2_WB_LANE_1_EXT"],    
+        
+    # Intersection 3:
+    # Northbound
+    ("INT3", "NB_LANE_1"):[("INT4", "NB_LANE_1"), "INT3_WB_LANE_1_EXT"],
     ("INT3", "NB_LANE_2"):("INT4", "NB_LANE_2"),
-    
-    # Southbound connections
-    ("INT4", "SB_LANE_1"):("INT3", "SB_LANE_1"),
-    ("INT4", "SB_LANE_2"):("INT3", "SB_LANE_2"),
-    ("INT3", "SB_LANE_1"):("INT2", "SB_LANE_1"),
-    ("INT3", "SB_LANE_2"):("INT2", "SB_LANE_2"),  
-    ("INT2", "SB_LANE_1"):("INT1", "SB_LANE_1"),
-    ("INT2", "SB_LANE_2"):("INT1", "SB_LANE_2"),  
-    
-    # Eastbound connections
-    ("INT4", "EB_LANE_2"):("INT4", "SB_LANE_2"),
-    ("INT1", "EB_LANE_1"):[("INT2", "NB_LANE_1"), ("INT2", "NB_LANE_2")],
-    ("INT2", "EB_LANE_1"):[("INT3", "NB_LANE_1"), ("INT3", "NB_LANE_2")],
-    ("INT3", "EB_LANE_1"):[("INT4", "NB_LANE_1"), ("INT4", "NB_LANE_2")],
-    
-    # Westbound connections
-    ("INT4", "WB_LANE_1"):("INT3", "SB_LANE_1"),
-    ("INT3", "WB_LANE_1"):[("INT2", "SB_LANE_1"), ("INT2", "SB_LANE_2")],
-    ("INT2", "WB_LANE_1"):[("INT1", "SB_LANE_1"), ("INT1", "SB_LANE_2")],
-    ("INT1", "WB_LANE_1"): [("INT2", "NB_LANE_1"), ("INT2", "NB_LANE_2")]
+    # Southbound
+    ("INT3", "SB_LANE_1"):[("INT2", "SB_LANE_1"), "INT3_EB_LANE_1_EXT"],  
+    ("INT3", "SB_LANE_2"):("INT2", "SB_LANE_2"),    
+    # Eastbound
+    ("INT3", "EB_LANE_1"):[("INT4", "NB_LANE_1"), "INT3_EB_LANE_1_EXT"],    
+    # Westbound           
+    ("INT3", "WB_LANE_1"):[("INT2", "SB_LANE_1"), "INT3_WB_LANE_1_EXT"],        
+        
+    # Intersection 4:
+    # Northbound
+    ("INT4", "NB_LANE_1"):"INT4_WB_LANE_1_EXT",
+    ("INT4", "NB_LANE_2"):"INT4_EB_LANE_2_EXT",    
+    # Southbound
+        # is INT3_SB Lanes
+    # Eastbound
+    ("INT4", "EB_LANE_2"):[("INT3", "SB_LANE_2"), "INT4_EB_LANE_2_EXT"],
+    ("INT4", "EB_LANE_1"):"INT4_EB_LANE_1_EXT",    
+    # Westbound       
+    ("INT4", "WB_LANE_1"):[("INT3", "SB_LANE_1"), "INT4_WB_LANE_1_EXT"],
+    ("INT4", "WB_LANE_2"):"INT4_WB_LANE_2_EXT",    
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
 
