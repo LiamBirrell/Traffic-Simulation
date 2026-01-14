@@ -8,6 +8,6 @@ A Python-based traffic simulation using array-based queuing and Gurobi optimizat
 
 TO-DO:
 
-* Add exits to connection raods
-* exit probabilities (weights)
-* script to generate dictionary for vehicles: Time vehicle enters, where it enters, where it exits.
+* Fix integer split between entry and exit assignments
+* add timeslot allocations
+* build the vehicle dictionary for the actual simulation
