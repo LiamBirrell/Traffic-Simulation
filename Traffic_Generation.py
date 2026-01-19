@@ -2,9 +2,10 @@ from Traffic_Data import *
 import numpy as np
 import random
 
-num_vehicles = 5000
 sim_length = 3600 # seconds
-
+num_vehicles = 5000
+mean = sim_length/2
+std = mean/3
 
 entry_weights_check = {(i): sum(entry_lane_weights[i].values())
                        for i in entry_lane_weights}
@@ -25,9 +26,20 @@ if sum(exit_weights_check.values()) != len(exit_weights_check):
     raise ValueError("Values in exit_lane_weights donot sum to 1\n"\
                       "\t\t\tSee above for Lanes and their summations")
 
-entry_lane_volume = {(i,j): num_vehicles*entry_lane_weights[i][j]
-                     for i in entry_lane_weights for j in entry_lane_weights[i]}
+entry_lane_dist = [entry_lane_weights[i][j]
+                  for i in entry_lane_weights for j in entry_lane_weights[i]]
 
-exit_lane_volume = {(i,j): exit_lane_weights[i][j]*entry_lane_volume[i]
-                    for i in entry_lane_volume for j in exit_lane_weights[i]}
+exit_lane_dist = [list(exit_lane_weights[i].values())
+                 for i in exit_lane_weights]
+
+entry_lane_assignments = np.random.multinomial(5000, entry_lane_dist)
+        
+exit_lane_assignments = [np.random.multinomial(i, j)
+                         for i, j in zip(entry_lane_assignments, exit_lane_dist)]
+
+time_slot_assignments = [int(np.clip(np.random.normal(mean, std), 0, sim_length-1))
+              for i in range(num_vehicles)]
+
+
+
 

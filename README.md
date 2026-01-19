@@ -8,6 +8,5 @@ A Python-based traffic simulation using array-based queuing and Gurobi optimizat
 
 TO-DO:
 
-* Fix integer split between entry and exit assignments
-* add timeslot allocations
-* build the vehicle dictionary for the actual simulation
+* Build the vehicle dictionary
+* get started on building the initial simulation
