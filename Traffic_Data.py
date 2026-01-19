@@ -46,28 +46,25 @@ intersections = {
     }
 
 entry_lane_weights = {
-    "INT1":{"NB_LANE_1": 0.1,
-            "NB_LANE_2": 0.4, 
-            "EB_LANE_1": 0.125,
-            "EB_LANE_2": 0.0125,
-            "WB_LANE_1": 0.0125,
-            "WB_LANE_2": 0.0125,
-            },
+    ("INT1","NB_LANE_1"): 0.1,
+    ("INT1","NB_LANE_2"): 0.4, 
+    ("INT1","EB_LANE_1"): 0.125,
+    ("INT1","EB_LANE_2"): 0.0125,
+    ("INT1","WB_LANE_1"): 0.0125,
+    ("INT1","WB_LANE_2"): 0.0125,
+     
+    ("INT2","EB_LANE_1"): 0.00625,
+    ("INT2","WB_LANE_1"): 0.00625, 
     
-    "INT2":{"EB_LANE_1": 0.00625,
-            "WB_LANE_1": 0.00625,
-            }, 
+    ("INT3","EB_LANE_1"): 0.0125,
+    ("INT3","WB_LANE_1"): 0.0125,
     
-    "INT3":{"EB_LANE_1": 0.0125,
-            "WB_LANE_1": 0.0125,     
-            }, 
-    
-    "INT4":{"EB_LANE_1": 0.025,     
-            "EB_LANE_2": 0.025,
-            "WB_LANE_1": 0.2,
-            "WB_LANE_2": 0.05,
-            }    
+    ("INT4","EB_LANE_1"): 0.025,     
+    ("INT4","EB_LANE_2"): 0.025,
+    ("INT4","WB_LANE_1"): 0.2,
+    ("INT4","WB_LANE_2"): 0.05
     }
+
 
 exit_lane_weights = {
     ("INT1","NB_LANE_1"):{"INT1_WB_LANE_1_EXT": 0.025,
