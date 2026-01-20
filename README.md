@@ -10,7 +10,6 @@ TO-DO:
 
 1) Infrastructure
 * Traffic light Management - green/red light timers that are running off set patterns
-* Lane state stracking - ensuring each lane array is correctly tracking which "spots" (cells) are occupied
 
 2) Navigation
 * Using connections dictionary from traffic_data to make sure each car knows what it's next lane is throughout the routes
@@ -26,6 +25,7 @@ TO-DO:
 
 5) Main Engine
 * The simulation loop that loops over every timestamp and tracks every cars position and at each timestep
+* Lane state stracking - ensuring each lane array is correctly tracking which "spots" (cells) are occupied
     * light updates
     * cars spawn/move
     * Record data
