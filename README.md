@@ -25,7 +25,7 @@ TO-DO:
 
 5) Main Engine
 * The simulation loop that loops over every timestamp and tracks every cars position and at each timestep
-* Lane state stracking - ensuring each lane array is correctly tracking which "spots" (cells) are occupied
+* Lane state tracking - ensuring each lane array is correctly tracking which "spots" (cells) are occupied
     * light updates
     * cars spawn/move
     * Record data
