@@ -1,49 +1,45 @@
 intersections = {
-    "INT1":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
-            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
+    "INT1":{"NB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*50},
+            "NB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*50},
 
-            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},         
-            "EB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},
+            "EB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*50},         
+            "EB_LANE_2":{"COLOUR": "RED", "CELLS": [0]*50},
             
-            "WB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},
-            "WB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},          
+            "WB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*50},
+            "WB_LANE_2":{"COLOUR": "RED", "CELLS": [0]*50},  
             
-            "CURRENT PHASE":"MAIN ROAD"
+            "SB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*50},
+            "SB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*50},            
             },
-    "INT2":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
-            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
+    "INT2":{"NB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*150},
+            "NB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*150},
             
-            "SB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
-            "SB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
+            "SB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*150},
+            "SB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*150},
 
-            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25},
-            "WB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25},      
-            
-            "CURRENT PHASE":"MAIN ROAD"
+            "EB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*25},
+            "WB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*25},    
             },  
-    "INT3":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
-            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
+    "INT3":{"NB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*150},
+            "NB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*150},
             
-            "SB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
-            "SB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
+            "SB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*50},
+            "SB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*50},
 
-            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25},  
-            "WB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*25}, 
-            
-            "CURRENT PHASE":"MAIN ROAD"
+            "EB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*25},  
+            "WB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*25}, 
             },  
-    "INT4":{"NB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
-            "NB_LANE_2":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*150},
+    "INT4":{"NB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*150},
+            "NB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*150},
 
-            "EB_LANE_1":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},        
-            "EB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},
+            "EB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*50},        
+            "EB_LANE_2":{"COLOUR": "RED", "CELLS": [0]*50},
             
-            "WB_LANE_1":{"COLOUR": "GREEN", "TIMER": 40, "CELLS": [0]*50},
-            "WB_LANE_2":{"COLOUR": "RED", "TIMER": 0, "CELLS": [0]*50},
-            
-            "CURRENT PHASE":"MAIN ROAD"
+            "WB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*50},
+            "WB_LANE_2":{"COLOUR": "RED", "CELLS": [0]*50},
             }    
     }
+
 
 entry_lane_weights = {
     ("INT1","NB_LANE_1"): 0.1,
