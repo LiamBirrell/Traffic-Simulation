@@ -1,6 +1,6 @@
 from Traffic_Data import *
 import numpy as np
-import random
+# import random
 
 sim_length = 3600 # seconds
 num_vehicles = 5000
@@ -55,4 +55,3 @@ vehicles = []
 for i,(j,k,t) in enumerate(zip(entry_lane_flatten, exit_lane_flatten, time_slots)):
     vehicle_new = {"VEHICLE_ID": i, "ENTRY_LANE": j, "EXIT_LANE": k, "TIME_SLOT": t}
     vehicles.append(vehicle_new)
-  
