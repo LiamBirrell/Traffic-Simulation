@@ -36,13 +36,23 @@ exit_lane_slots = [np.random.multinomial(i, j)
 time_slots = [int(np.clip(np.random.normal(mean, std), 0, sim_length-1))
                          for i in range(num_vehicles)]
 
-entry_lane_assignments = {(i): [list(entry_lane_weights.keys())[j]]*entry_lane_slots[j]
-                          for (i,j) in zip(entry_lane_weights, range(len(entry_lane_slots)))}
+entry_lane_assignments = [[list(entry_lane_weights.keys())[j]]*entry_lane_slots[j]
+                          for (i,j) in zip(entry_lane_weights, range(len(entry_lane_slots)))]
 
-exit_lane_assignments = {}
-for (i,j) in zip(entry_lane_weights, exit_lane_slots): 
-    current_exits = []
-    for (k,j) in zip(exit_lane_weights[i],j):                  
-        current_exits.extend([k]*j)
-    exit_lane_assignments[i] = current_exits
-    
+exit_lane_assignments = [[list(exit_lane_weights[i].keys())[k]]*exit_lane_slots[j][k]
+                          for (i,j) in zip(entry_lane_weights, range(len(entry_lane_slots)))
+                          for k in range(len(exit_lane_slots[j]))]
+
+entry_lane_flatten = [entry_lane_assignments[i][j]
+                      for i in range(len(entry_lane_assignments))
+                      for j in range(len(entry_lane_assignments[i]))]
+                     
+exit_lane_flatten = [exit_lane_assignments[i][j]
+                      for i in range(len(exit_lane_assignments))
+                      for j in range(len(exit_lane_assignments[i]))]
+
+vehicles = []
+for i,(j,k,t) in enumerate(zip(entry_lane_flatten, exit_lane_flatten, time_slots)):
+    vehicle_new = {"VEHICLE_ID": i, "ENTRY_LANE": j, "EXIT_LANE": k, "TIME_SLOT": t}
+    vehicles.append(vehicle_new)
+  

@@ -8,5 +8,7 @@ A Python-based traffic simulation using array-based queuing and Gurobi optimizat
 
 TO-DO:
 
-* Build the vehicle dictionary
-* get started on building the initial simulation
+* Model up the simulation
+* ensure routes are met with viable connections
+* work on implementing merging methods
+* TBD
