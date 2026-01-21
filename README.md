@@ -12,12 +12,12 @@ TO-DO:
 * ~~Traffic light Management - green/red light timers that are running off set patterns~~
 
 2) Navigation
-* Using connections dictionary from traffic_data to make sure each car knows what it's next lane is throughout the routes
+* ~~Using connections dictionary from traffic_data to make sure each car knows what it's next lane is throughout the routes~~
+* ~~add mergings to routes~~
 
 3) Movement Laws
 * Make sure each car is placed into a lane at the correct timestamps
 * Car can only move forward if the next cell is empty
-* if a car needs to merge, once it enters the lane, it waits to see if the adjacent lane is empty and waits until it is
 
 4) Traffic Laws
 * Cars at front of the lane cannot proceed into the destination lane unless the light is green
@@ -28,6 +28,7 @@ TO-DO:
 * Lane state tracking - ensuring each lane array is correctly tracking which "spots" (cells) are occupied
     * light updates
     * cars spawn/move
+    * if a car needs to merge, once it enters the lane, it waits to see if the adjacent lane is empty and waits until it is
     * Record data
 * delete cars on exit
 

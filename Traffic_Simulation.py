@@ -1,6 +1,5 @@
 from Traffic_Generation import *
 import numpy as np
-import copy
 
 CROSSROAD_TIMER = 45
 CROSSROAD_REPEATS = sim_length/CROSSROAD_TIMER
@@ -30,8 +29,48 @@ for i in intersections:
                                               +[1]*(T_JUNCTION_TIMER)\
                                               +[0]*(T_JUNCTION_TIMER))\
                                               *int((T_JUNCTION_REPEATS)/3)    
-                                              
 
+def get_neighbour(lane):
+    if "NB_LANE_1" in lane[1]:
+        for i in range(len(list(connections.keys()))):
+            if lane[0] in list(connections.keys())[i]:
+                if "NB_LANE_2" in list(connections.keys())[i][1]:
+                    return list(connections.keys())[i]
+                    
+    if "SB_LANE_1" in lane[1]:
+        for i in range(len(list(connections.keys()))):
+            if lane[0] in list(connections.keys())[i]:
+                if "SB_LANE_2" in list(connections.keys())[i][1]:
+                    return list(connections.keys())[i]
+                              
+    if "NB_LANE_2" in lane[1]:
+        for i in range(len(list(connections.keys()))):
+            if lane[0] in list(connections.keys())[i]:
+                if "NB_LANE_1" in list(connections.keys())[i][1]:
+                    return list(connections.keys())[i]
+                    
+    if "SB_LANE_2" in lane[1]:
+        for i in range(len(list(connections.keys()))):
+            if lane[0] in list(connections.keys())[i]:
+                if "SB_LANE_1" in list(connections.keys())[i][1]:
+                    return list(connections.keys())[i]
 
-               
-                
+def path_find(i,j,path):
+    if j in list(connections[i]):
+        return path + [j]
+    for k in range(len(connections[(i)])):
+        if "EXT" not in list(connections[(i)])[k]:
+            next_lane = connections[i][k]
+            result = path_find(next_lane,j,path+[next_lane])
+            if not result:  
+                for k in range(len(connections[(i)])):
+                    if "EXT" not in list(connections[(i)])[k]:
+                        next_lane = connections[i][k]
+                        next_next_lane = get_neighbour(next_lane)
+                        result = path_find(next_next_lane,j,path+[next_lane]+[next_next_lane])   
+            if result:
+                return result  
+
+routes = {(i,j): path_find(i,j,[])
+          for i in exit_lane_weights for j in list(exit_lane_weights[i].keys())}
+        
