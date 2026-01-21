@@ -2,50 +2,36 @@ from Traffic_Generation import *
 import numpy as np
 import copy
 
-INT1_TIMER = 45
-INT1_REPEATS = sim_length/INT1_TIMER
-INT4_TIMER = 30
-INT4_REPEATS = sim_length/INT4_TIMER
+CROSSROAD_TIMER = 45
+CROSSROAD_REPEATS = sim_length/CROSSROAD_TIMER
+T_JUNCTION_TIMER = 30
+T_JUNCTION_REPEATS = sim_length/T_JUNCTION_TIMER
+        
+default_light_schedule = {}
+for i in intersections:
+    for j in intersections[i]["LANES"]:
+        if intersections[i]["INTERSECTION_TYPE"] == "CROSSROAD":     
+            if "NB" in j:
+                default_light_schedule[i,j] = ([1]*CROSSROAD_TIMER+[0]*CROSSROAD_TIMER)*int(CROSSROAD_REPEATS/2)
+            if "SB" in j:    
+                default_light_schedule[i,j] = ([1]*CROSSROAD_TIMER+[0]*CROSSROAD_TIMER)*int(CROSSROAD_REPEATS/2)
+            if "EB" in j:
+                default_light_schedule[i,j] = ([0]*CROSSROAD_TIMER+[1]*CROSSROAD_TIMER)*int(CROSSROAD_REPEATS/2)
+            if "WB" in j:    
+                default_light_schedule[i,j] = ([0]*CROSSROAD_TIMER+[1]*CROSSROAD_TIMER)*int(CROSSROAD_REPEATS/2)
+                
+        if intersections[i]["INTERSECTION_TYPE"] == "T_JUNCTION":
+            if "NB" in j:
+                default_light_schedule[i,j] = ([1]*T_JUNCTION_TIMER+[0]*T_JUNCTION_TIMER*2)*int(T_JUNCTION_REPEATS/3)
+            if "EB" in j:
+                default_light_schedule[i,j] = ([0]*T_JUNCTION_TIMER*2+[1]*T_JUNCTION_TIMER)*int(T_JUNCTION_REPEATS/3)
+            if "WB" in j:    
+                default_light_schedule[i,j] = ([0]*(T_JUNCTION_TIMER)\
+                                              +[1]*(T_JUNCTION_TIMER)\
+                                              +[0]*(T_JUNCTION_TIMER))\
+                                              *int((T_JUNCTION_REPEATS)/3)    
+                                              
 
-INT1_schedule = {}
-for i in intersections["INT1"]:
-    if "NB" in i:
-        INT1_schedule[i] = ([1]*INT1_TIMER+[0]*INT1_TIMER)*int(INT1_REPEATS/2)
-    if "SB" in i:    
-        INT1_schedule[i] = ([1]*INT1_TIMER+[0]*INT1_TIMER)*int(INT1_REPEATS/2)
-    if "EB" in i:
-        INT1_schedule[i] = ([0]*INT1_TIMER+[1]*INT1_TIMER)*int(INT1_REPEATS/2)
-    if "WB" in i:    
-        INT1_schedule[i] = ([0]*INT1_TIMER+[1]*INT1_TIMER)*int(INT1_REPEATS/2)
-        
-INT2_schedule = {}
-for i in intersections["INT2"]:
-    if "NB" in i:
-        INT2_schedule[i] = ([0]*INT1_TIMER+[1]*INT1_TIMER)*int(INT1_REPEATS/2)
-    if "SB" in i: 
-        INT2_schedule[i] = ([0]*INT1_TIMER+[1]*INT1_TIMER)*int(INT1_REPEATS/2)
-    if "EB" in i:
-        INT2_schedule[i] = ([1]*INT1_TIMER+[0]*INT1_TIMER)*int(INT1_REPEATS/2)
-    if "WB" in i:  
-        INT2_schedule[i] = ([1]*INT1_TIMER+[0]*INT1_TIMER)*int(INT1_REPEATS/2)
-             
-INT3_schedule = {}
-for i in intersections["INT3"]:
-    if "NB" in i:
-        INT3_schedule[i] = ([1]*INT1_TIMER+[0]*INT1_TIMER)*int(INT1_REPEATS/2)
-    if "SB" in i:    
-        INT3_schedule[i] = ([1]*INT1_TIMER+[0]*INT1_TIMER)*int(INT1_REPEATS/2)
-    if "EB" in i:
-        INT3_schedule[i] = ([0]*INT1_TIMER+[1]*INT1_TIMER)*int(INT1_REPEATS/2)
-    if "WB" in i:    
-        INT3_schedule[i] = ([0]*INT1_TIMER+[1]*INT1_TIMER)*int(INT1_REPEATS/2)
-        
-INT4_schedule = {}
-for i in intersections["INT4"]:
-    if "NB" in i:
-        INT4_schedule[i] = ([1]*INT4_TIMER+[0]*INT4_TIMER)*int(INT4_REPEATS/2)
-    if "EB" in i:
-        INT4_schedule[i] = ([0]*INT4_TIMER+[1]*INT4_TIMER)*int(INT4_REPEATS/2)
-    if "WB" in i:    
-        INT4_schedule[i] = [0]*(INT4_TIMER*2)+[1]*(INT4_TIMER*2)+([0]*INT4_TIMER+[1]*INT4_TIMER)*int((INT4_REPEATS-4)/2)
-        
+
+               
+                

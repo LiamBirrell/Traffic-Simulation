@@ -9,7 +9,7 @@ A Python-based traffic simulation using array-based queuing and Gurobi optimizat
 TO-DO:
 
 1) Infrastructure
-* Traffic light Management - green/red light timers that are running off set patterns
+* ~~Traffic light Management - green/red light timers that are running off set patterns~~
 
 2) Navigation
 * Using connections dictionary from traffic_data to make sure each car knows what it's next lane is throughout the routes

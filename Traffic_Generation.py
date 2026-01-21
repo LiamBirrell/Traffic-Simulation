@@ -33,7 +33,7 @@ entry_lane_slots = np.random.multinomial(5000, entry_lane_dist)
 exit_lane_slots = [np.random.multinomial(i, j)
                           for i, j in zip(entry_lane_slots, exit_lane_dist)]
 
-time_slots = [int(np.clip(np.random.normal(mean, std), 0, sim_length-1))
+time_slots = [int(np.clip(np.random.normal(mean, std), 0, sim_length*0.9))
                          for i in range(num_vehicles)]
 
 entry_lane_assignments = [[list(entry_lane_weights.keys())[j]]*entry_lane_slots[j]
