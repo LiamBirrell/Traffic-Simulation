@@ -74,6 +74,74 @@ def path_find(i,j,path):
 routes = {(i,j): path_find(i,j,[])
           for i in exit_lane_weights for j in list(exit_lane_weights[i].keys())}
 
+           
+def simulation(light_sequence, routes):
+    vehicles = vehicle_generation(entry_lane_weights, exit_lane_weights)
+    car_counter = 0
+    for t in range(sim_length):
+        # Traffic Light change logic
+        for i in intersections:
+            for j in intersections[i]["LANES"]:
+                if light_sequence[(i,j)][t] == 1:
+                    intersections[i]["LANES"][j]["COLOUR"] = "GREEN"  
+                else:
+                    intersections[i]["LANES"][j]["COLOUR"] = "RED"  
+                    
+        # Spawn the vehicles
+        while car_counter < len(vehicles) and t == vehicles[car_counter]["TIME_SLOT"]:
+            veh_id = vehicles[car_counter]["VEHICLE_ID"]
+            inter = vehicles[car_counter]["ENTRY_LANE"][0]
+            entry = vehicles[car_counter]["ENTRY_LANE"][1]
+            ext = vehicles[0]["EXIT_LANE"]
+            i = 0
+            while i < len(intersections[inter]["LANES"][entry]["CELLS"]):
+                if intersections[inter]["LANES"][entry]["CELLS"][i] == 0:
+                    intersections[inter]["LANES"][entry]["CELLS"][i] = veh_id
+                    break
+                else: i += 1
+            car_counter += 1 
+            
+    return intersections, vehicles
 
 
-        
+intersections, vehicles = simulation(default_light_schedule, routes)      
+
+
+      
+            
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

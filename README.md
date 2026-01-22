@@ -15,19 +15,17 @@ TO-DO:
 * ~~Using connections dictionary from traffic_data to make sure each car knows what it's next lane is throughout the routes~~
 * ~~add mergings to routes~~
 
-3) Traffic/movement Laws
-* Car can only move forward if the next cell is empty
-* Cars at front of the lane cannot proceed into the destination lane unless the light is green
-* if the light is green but the destination lane is full, the car must wait at the light until it a spot is free
-* Merging laws - if a cars next lane is an adjacent lane, car must wait until the adjacent slot is empty
-
-4) Main Engine
-* The simulation loop that loops over every timestamp and tracks every cars position and at each timestep
-* Make sure each car is placed into a lane at the correct timestamps
-* Lane state tracking - ensuring each lane array is correctly tracking which "spots" (cells) are occupied
-    * light updates
-    * cars spawn/move
-    * if a car needs to merge, once it enters the lane, it waits to see if the adjacent lane is empty and waits until it is
-    * Record data
+3) Main Sim
+* ~~ Traffic light switch logic~~
+* ~~Make sure each car is placed into a lane at the correct timestamps~~
+* Movement
+    * Cars can only move forward if the next cell is empty 
+    * Cars proceed into the next lane if the light is green
+    * If a cars next lane is an adjacent lane, car must wait until the adjacent slot is empty
+* Tracking
+    * Every cars position at each timestep
+        * How long they were in each Lane
+        * Total trip duration
+    * How many cars were in each lane at each timestep
 * delete cars on exit
 
