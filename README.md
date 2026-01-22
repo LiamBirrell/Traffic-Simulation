@@ -16,7 +16,7 @@ TO-DO:
 * ~~add mergings to routes~~
 
 3) Main Sim
-* ~~ Traffic light switch logic~~
+* ~~Traffic light switch logic~~
 * ~~Make sure each car is placed into a lane at the correct timestamps~~
 * Movement
     * Cars can only move forward if the next cell is empty 
