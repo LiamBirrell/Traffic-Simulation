@@ -19,8 +19,8 @@ TO-DO:
 * ~~Traffic light switch logic~~
 * ~~Make sure each car is placed into a lane at the correct timestamps~~
 * Movement
-    * Cars can only move forward if the next cell is empty 
-    * Cars proceed into the next lane if the light is green
+    * ~~Cars can only move forward if the next cell is empty~~
+    * ~~Cars proceed into the next lane if the light is green~~
     * If a cars next lane is an adjacent lane, car must wait until the adjacent slot is empty
 * Tracking
     * Every cars position at each timestep
