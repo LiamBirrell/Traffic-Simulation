@@ -37,8 +37,16 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
     cars_exited = 0
     cars_merged = 0
     vehicle_route = {}
+    sim_log = {"TIME_STEP": [],
+                "CARS_EXITED": [],
+                "LANE_COUNTS": {}}
+    
+    for i in intersections:
+        for j in intersections[i]["LANES"]:
+            sim_log["LANE_COUNTS"][(i,j)] = []  
+    
     for t in range(sim_length):
-        print(f"Timetep = {t}")
+        # print(f"Timetep = {t}")
         # Check how many cars are on the road at each timestep
         cars_on_road = len(vehicle_route) - cars_exited
         print(f"Timestep = {t} | Cars on road: {cars_on_road}")
@@ -120,6 +128,8 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
                             cars_merged += 1
                             print(f"Car Has Merged - Total cars merged = {cars_merged}")
                             continue
+                        # If adjacent lane isn't free, the car waits for an opening (skips move forward code below)
+                        else: continue
                 
                 if lane_cell[veh_position - 1] == 0:
                     # Update next cells ID with previous cells ID
@@ -129,9 +139,18 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
                     intersections[current_int]["LANES"][current_lane]["CELLS"][veh_position] = 0
                     continue
                 
+            # Track the lane length after every minute has passed
+            if t % 60 == 0:
+                sim_log["TIME_STEP"].append(t)
+                sim_log["CARS_EXITED"].append(cars_exited)
+                for i in intersections:
+                    for j in intersections[i]["LANES"]:
+                        lane_count = sum(1 for k in intersections[i]["LANES"][j]["CELLS"] if k != 0)
+                        sim_log["LANE_COUNTS"][(i,j)].append(lane_count)
+                
+    
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
     print(f"Elapsed time: {elapsed_time:.4f} seconds")            
-    return intersections, vehicles, vehicle_route
-
-intersections, vehicles, vehicle_route = simulation(default_light_schedule, vehicles,  routes, neighbour_map)      
+    return intersections, vehicles, vehicle_route, sim_log
+intersections, vehicles, vehicle_route, sim_log = simulation(default_light_schedule, vehicles,  routes, neighbour_map)     

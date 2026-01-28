@@ -4,8 +4,8 @@ import numpy as np
 
 sim_length = 3600 # seconds
 num_vehicles = 5000
-mean = sim_length/2
-std = mean/3
+spawn_peak = sim_length/4
+std = spawn_peak/3
 np.random.seed(97)
 
 entry_weights_check = sum(entry_lane_weights.values())
@@ -51,7 +51,7 @@ def vehicle_generation(entry_lanes, exit_lanes):
                           for i in range(len(exit_lane_assignments))
                           for j in range(len(exit_lane_assignments[i]))]
     
-    time_slots = [int(np.clip(np.random.normal(mean, std), 0, sim_length*0.9))
+    time_slots = [int(np.clip(np.random.normal(spawn_peak, std), 0, sim_length*0.9))
                   for i in range(num_vehicles)]    
     
     vehicles = []

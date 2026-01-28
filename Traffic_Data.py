@@ -6,8 +6,8 @@ intersections = {
                       "EB_LANE_2":{"COLOUR": "RED", "CELLS": [0]*50},
                       "WB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*50},
                       "WB_LANE_2":{"COLOUR": "RED", "CELLS": [0]*50},  
-                      "SB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*50},
-                      "SB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*50}
+                      "SB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*150},
+                      "SB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*150}
                       }
             },
     
@@ -24,8 +24,8 @@ intersections = {
     "INT3":{"INTERSECTION_TYPE": "CROSSROAD",
             "LANES": {"NB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*150},
                       "NB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*150},
-                      "SB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*50},
-                      "SB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*50},
+                      "SB_LANE_1":{"COLOUR": "GREEN", "CELLS": [0]*150},
+                      "SB_LANE_2":{"COLOUR": "GREEN", "CELLS": [0]*150},
                       "EB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*25},  
                       "WB_LANE_1":{"COLOUR": "RED", "CELLS": [0]*25}
                       }

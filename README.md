@@ -7,7 +7,7 @@ A Python-based traffic simulation using array-based queuing and Gurobi optimizat
 TO-DO:
 
 1) Simulation
-* Tracking LOG for each vehicle in the simulation
+* ~~Tracking LOG for each vehicle in the simulation~~
 
 2) Visuals
 * Graphs of queue lengths for each lane throughout the sim
