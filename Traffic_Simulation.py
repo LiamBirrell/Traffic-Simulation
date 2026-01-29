@@ -30,32 +30,6 @@ for i in intersections:
                                               +[1]*(T_JUNCTION_TIMER)\
                                               +[0]*(T_JUNCTION_TIMER))\
                                               *int((T_JUNCTION_REPEATS)/3)    
-waitlist = {"VEHICLE_ID": [],
-            "ENTRY_INTER": [],
-            "ENTRY_LANE": [],
-            "EXIT_LANE": [],
-            # "ROUTE": []
-            }
-
-sim_log = {"TIME_STEP": [],
-            "CARS_EXITED": [],
-            "LANE_COUNTS": {}}
-
-for i in intersections:
-    for j in intersections[i]["LANES"]:
-        sim_log["LANE_COUNTS"][(i,j)] = []  
-           
-def is_full(lane_cells):
-    for i in lane_cells:
-        if i == 0:
-            return False
-    return True
-
-lane_sum = 0
-for i in intersections:
-    for j in intersections[i]["LANES"]:
-        lane_sum += len(intersections[i]["LANES"][j]["CELLS"])
-
 
 def simulation(light_sequence, vehicles, routes, neighbour_map):
     start_time = time.perf_counter()
@@ -106,36 +80,26 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
                 waitlist["ENTRY_LANE"].append(entry)
                 waitlist["EXIT_LANE"].append(ext)  
                 car_counter += 1
-                continue          
+                continue   
             
-            # If entry lane had a cell available, add that car to the entry lane
-            # Bust first check if there's cars waiting to be added from the waitlist
-            wait_car_spawn = False
-            for j in range(len(waitlist["VEHICLE_ID"])):
-                if (inter, entry) == (waitlist["ENTRY_INTER"][j], waitlist["ENTRY_LANE"][j]):
-                    # If car is waiting to be added to current lane, pop it from the waitlist
-                    veh_id_w = waitlist["VEHICLE_ID"].pop(j)
-                    inter_w = waitlist["ENTRY_INTER"].pop(j)
-                    entry_w = waitlist["ENTRY_LANE"].pop(j)
-                    ext_w = waitlist["EXIT_LANE"].pop(j)       
-                    
-                    # Add popped vehicle to the simulation
-                    vehicle_route[car_counter] = {"VEHICLE_ID": veh_id_w, "ROUTE": routes[((inter_w, entry_w),ext_w)], "ROUTE_INDEX": 0}  
-                    intersections[inter_w]["LANES"][entry_w]["CELLS"][-1] = veh_id_w
-                    
-                    # Add the original vehicle to the wait list
-                    waitlist["VEHICLE_ID"].append(veh_id)
-                    waitlist["ENTRY_INTER"].append(inter)
-                    waitlist["ENTRY_LANE"].append(entry)
-                    waitlist["EXIT_LANE"].append(ext)
-                    
-                    wait_car_spawn = True
-                    break
-            # If no car from the waitlist was added - add the original car to the simulation        
-            if not wait_car_spawn:
-                vehicle_route[car_counter] = {"VEHICLE_ID": veh_id, "ROUTE": routes[((inter, entry),ext)], "ROUTE_INDEX": 0}  
-                intersections[inter]["LANES"][entry]["CELLS"][-1] = veh_id
-            car_counter += 1
+            # If entry lane was available to enter, spawn the car there
+            vehicle_route[veh_id] = {"VEHICLE_ID": veh_id, "ROUTE": routes[((inter, entry),ext)], "ROUTE_INDEX": 0}  
+            intersections[inter]["LANES"][entry]["CELLS"][-1] = veh_id
+            car_counter += 1            
+            
+        # If an entry lane has a cell available, add a car from the waitlist to that entry lane
+        for j in range(len(waitlist["VEHICLE_ID"])-1, -1, -1):
+            w_inter = waitlist["ENTRY_INTER"][j]
+            w_entry = waitlist["ENTRY_LANE"][j]            
+            if intersections[w_inter]["LANES"][w_entry]["CELLS"][-1] == 0:    
+                veh_id_w = waitlist["VEHICLE_ID"].pop(j)
+                inter_w = waitlist["ENTRY_INTER"].pop(j)
+                entry_w = waitlist["ENTRY_LANE"].pop(j)
+                ext_w = waitlist["EXIT_LANE"].pop(j)       
+                
+                # Add waitlisted vehicle to the simulation
+                vehicle_route[veh_id_w] = {"VEHICLE_ID": veh_id_w, "ROUTE": routes[((inter_w, entry_w),ext_w)], "ROUTE_INDEX": 0}  
+                intersections[inter_w]["LANES"][entry_w]["CELLS"][-1] = veh_id_w
         
         
         # Move the vehicles
@@ -188,7 +152,7 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
                             cars_merged += 1
                             print(f"Car Has Merged - Total cars merged = {cars_merged}")
                             continue 
-                        
+                        # If adjacent lane isn't free, the car waits at front for an opening
                         else: 
                             continue
                         
@@ -227,10 +191,7 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
                             vehicle_route[i]["ROUTE_INDEX"] += 1
                             cars_merged += 1
                             print(f"Car Has Merged - Total cars merged = {cars_merged}")
-                            # continue
-                        
-                        # If adjacent lane isn't free, the car waits for an opening (skips move forward code below)
-                        # else: continue
+                            continue
                 
                 # Move the rest of the cars in each lane forward one cell
                 if lane_cell[veh_position - 1] == 0:
@@ -254,7 +215,7 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
     print(f"Elapsed time: {elapsed_time:.4f} seconds")            
-    return intersections, vehicles, vehicle_route, sim_log   
+    return intersections, vehicles, vehicle_route, sim_log, cars_exited  
 
 if __name__ == "__main__":
-    intersections, vehicles, vehicle_route, sim_log = simulation(default_light_schedule, vehicles, routes, neighbour_map) 
+    intersections, vehicles, vehicle_route, sim_log, cars_exited = simulation(default_light_schedule, vehicles, routes, neighbour_map) 
