@@ -10,8 +10,8 @@ TO-DO:
 * ~~Tracking LOG for each vehicle in the simulation~~
 
 2) Visuals
-* Graphs of queue lengths for each lane throughout the sim
-* Heatmap of the lanes with how full each one is relative to its max length
+* ~~Graphs of queue lengths for each lane throughout the sim~~
+* ~~Heatmap of the lanes with how full each one is relative to its max length~~
 
 3) Gurobi
 * Master Problem - Traffic Light Sequence generation
