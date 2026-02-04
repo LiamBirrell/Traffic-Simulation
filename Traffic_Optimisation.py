@@ -70,4 +70,3 @@ BMP.optimize()
 
 # Lights must be green for a minimum of min_green seconds
 # and cannot be green longer than max_green seconds
-
