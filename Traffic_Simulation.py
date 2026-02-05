@@ -1,6 +1,7 @@
 from Traffic_Generation import *
 import numpy as np
 import time
+import copy
 
 CROSSROAD_TIMER = 45
 CROSSROAD_REPEATS = sim_length/CROSSROAD_TIMER
@@ -31,7 +32,8 @@ for i in intersections:
                                               +[0]*(T_JUNCTION_TIMER))\
                                               *int((T_JUNCTION_REPEATS)/3)    
 
-def simulation(light_sequence, vehicles, routes, neighbour_map):
+def simulation(light_sequence, vehicles_input, routes, neighbour_map):
+    vehicles = copy.deepcopy(vehicles_input)
     start_time = time.perf_counter()
     car_counter = 0
     cars_exited = 0
@@ -54,7 +56,7 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
     for t in range(sim_length):
         # Check how many cars are on the road at each timestep
         cars_on_road = len(vehicle_route) - cars_exited
-        print(f"Timestep = {t} | Cars on road: {cars_on_road}")
+        # print(f"Timestep = {t} | Cars on road: {cars_on_road}")
         
         # Traffic Light change logic - green if 1, red if 0
         for i in intersections:
@@ -126,7 +128,7 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
                     if "EXT" in destination_lane:
                         intersections[current_int]["LANES"][current_lane]["CELLS"][0] = 0
                         cars_exited += 1
-                        print(f"Car Has Exited - Total cars exited = {cars_exited}")
+                        # print(f"Car Has Exited - Total cars exited = {cars_exited}")
                         continue
                     
                     # Check for merging
@@ -150,7 +152,7 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
                             # Update counters/index
                             vehicle_route[i]["ROUTE_INDEX"] += 1
                             cars_merged += 1
-                            print(f"Car Has Merged - Total cars merged = {cars_merged}")
+                            # print(f"Car Has Merged - Total cars merged = {cars_merged}")
                             continue 
                         # If adjacent lane isn't free, the car waits at front for an opening
                         else: 
@@ -190,7 +192,7 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
                             # Update counters/index
                             vehicle_route[i]["ROUTE_INDEX"] += 1
                             cars_merged += 1
-                            print(f"Car Has Merged - Total cars merged = {cars_merged}")
+                            # print(f"Car Has Merged - Total cars merged = {cars_merged}")
                             continue
                 
                 # Move the rest of the cars in each lane forward one cell
@@ -214,7 +216,7 @@ def simulation(light_sequence, vehicles, routes, neighbour_map):
     
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
-    print(f"Elapsed time: {elapsed_time:.4f} seconds")            
+    # print(f"Elapsed time: {elapsed_time:.4f} seconds")            
     return intersections, vehicles, vehicle_route, sim_log, cars_exited  
 
 if __name__ == "__main__":
