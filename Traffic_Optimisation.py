@@ -90,10 +90,13 @@ for (i,j) in optimised_light_schedule:
     for t in range(cutoff + 1, sim_length):
         BMP.addConstr(Y[i,j,t] == 0)
 
-# All lights must be green for atleast 20% of the total sim length        
+# # All lights must be green for atleast 20% of the total sim length        
 for (i,j) in optimised_light_schedule:
     BMP.addConstr(gp.quicksum(X[i,j,t] for t in range(sim_length)) >= 0.20 * sim_length)
-    
+  
+lane_increments = {(i,j): 0.2
+                    for (i,j) in optimised_light_schedule}    
+  
 def Callback(model, where):
     if where == gp.GRB.Callback.MIPSOL:
         # Get Gurobi's proposed schedule
@@ -104,8 +107,22 @@ def Callback(model, where):
         for (i, j) in optimised_light_schedule:
             current_schedule[(i, j)] = [int(round(XV[i, j, t])) for t in range(sim_length)]
             
-        _i, _v, _r, _l, current_score = simulation(current_schedule, vehicles, routes, neighbour_map)
+        # Run the simulation with the current schedule
+        _i, _v, _r, sim_log, current_score = simulation(current_schedule, vehicles, routes, neighbour_map)
         
+        cuts_added = set()
+        for t in range(int(sim_length/60)):
+            for (i,j) in current_schedule:
+                if sim_log["LANE_COUNTS"][i, j][t] == len(intersections[i]["LANES"][j]["CELLS"]):
+                            cuts_added.add((i,j))
+                            
+        # If a lane is full during any 60 second interval of the simulation
+        # Add a cut that increases the amount of "on" time that lane can have            
+        if (i,j) not in cuts_added:
+            if lane_increments[i,j] <= 0.7:
+                lane_increments[i, j] += 0.05
+                model.cbLazy(gp.quicksum(X[i,j,k] for k in range(sim_length)) >= lane_increments[i, j] * sim_length)
+    
         # Identify Green Lights
         current_on_keys = [k for k in X if XV[k] > 0.5]
         
@@ -118,7 +135,12 @@ def Callback(model, where):
         dist_expr = val_n_on + expr_sum_all - 2*expr_sum_active
         
         # Add the cut
-        model.cbLazy(Theta <= current_score + num_vehicles * dist_expr)               
-                
+        model.cbLazy(Theta <= current_score + num_vehicles * dist_expr)   
+  
+# WarmStart
+for (i,j) in optimised_light_schedule:
+    for t in range(sim_length):
+        X[i,j,t].Start = default_light_schedule[i,j][t]   
+
 BMP.setParam("LazyConstraints", 1)
 BMP.optimize(Callback)

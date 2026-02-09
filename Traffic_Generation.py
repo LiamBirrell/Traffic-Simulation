@@ -1,6 +1,5 @@
 from Traffic_Data import *
 import numpy as np
-# import random
 
 sim_length = 3600 # seconds
 num_vehicles = 5000
@@ -59,7 +58,6 @@ def vehicle_generation(entry_lanes, exit_lanes):
         vehicle_new = {"VEHICLE_ID": i+1, "ENTRY_LANE": j, "EXIT_LANE": k, "TIME_SLOT": t}
         vehicles.append(vehicle_new)
         vehicles.sort(key=lambda x: x['TIME_SLOT'])
-    
     return vehicles
 
 vehicles = vehicle_generation(entry_lane_weights, exit_lane_weights)
