@@ -15,6 +15,10 @@ BMP = gp.Model('Benders Master Problem')
 X = {(i,j,t): BMP.addVar(vtype = gp.GRB.BINARY) for (i,j) in optimised_light_schedule
                                                 for t in range(sim_length)}
 
+# Y - 1 if intersection (i,j) turned green in timeslot t, 0 else
+Y = {(i,j,t) :BMP.addVar(vtype = gp.GRB.BINARY) for (i,j) in optimised_light_schedule
+                                                for t in range(sim_length)}
+
 Theta = BMP.addVar(vtype=gp.GRB.CONTINUOUS, lb=0, ub=num_vehicles)
 
 # No objective - BMP just creates the light patterns 
@@ -23,69 +27,68 @@ Theta = BMP.addVar(vtype=gp.GRB.CONTINUOUS, lb=0, ub=num_vehicles)
 # BMP.setObjective(0, gp.GRB.MINIMIZE)
 BMP.setObjective(Theta, gp.GRB.MAXIMIZE)
 
+incompatible_lights = {("INT1", "NB_LANE_1"): [("INT1", "EB_LANE_1"), ("INT1", "EB_LANE_2"),
+                                        ("INT1", "WB_LANE_1"), ("INT1", "WB_LANE_2")],
+                ("INT1", "NB_LANE_2"): [("INT1", "EB_LANE_1"), ("INT1", "EB_LANE_2"),
+                                        ("INT1", "WB_LANE_1"), ("INT1", "WB_LANE_2")],
+                ("INT1", "SB_LANE_1"): [("INT1", "EB_LANE_1"), ("INT1", "EB_LANE_2"),
+                                        ("INT1", "WB_LANE_1"), ("INT1", "WB_LANE_2")],                
+                ("INT1", "SB_LANE_2"): [("INT1", "EB_LANE_1"), ("INT1", "EB_LANE_2"),
+                                        ("INT1", "WB_LANE_1"), ("INT1", "WB_LANE_2")], 
+                
+                ("INT2", "NB_LANE_1"): [("INT2", "EB_LANE_1"), ("INT2", "WB_LANE_1")],
+                ("INT2", "NB_LANE_2"): [("INT2", "EB_LANE_1"), ("INT2", "WB_LANE_1")],                
+                ("INT2", "SB_LANE_1"): [("INT2", "EB_LANE_1"), ("INT2", "WB_LANE_1")],
+                ("INT2", "SB_LANE_2"): [("INT2", "EB_LANE_1"), ("INT2", "WB_LANE_1")], 
+
+                ("INT3", "NB_LANE_1"): [("INT3", "EB_LANE_1"), ("INT3", "WB_LANE_1")],
+                ("INT3", "NB_LANE_2"): [("INT3", "EB_LANE_1"), ("INT3", "WB_LANE_1")],                
+                ("INT3", "SB_LANE_1"): [("INT3", "EB_LANE_1"), ("INT3", "WB_LANE_1")],
+                ("INT3", "SB_LANE_2"): [("INT3", "EB_LANE_1"), ("INT3", "WB_LANE_1")],  
+                
+                ("INT4", "NB_LANE_2"): [("INT4", "EB_LANE_2"), ("INT4", "WB_LANE_1"),
+                                        ("INT4", "WB_LANE_2")],
+                ("INT4", "NB_LANE_1"): [("INT4", "WB_LANE_1")],
+                
+                ("INT4", "EB_LANE_2"): [("INT4", "WB_LANE_1"), ( "INT4", "WB_LANE_2")]
+                }
+
 # Constraints
+# Linking constraint
+for (i,j) in optimised_light_schedule:
+    for t in range(sim_length):
+        # At start, if X is 1, then Y is 1
+        if t == 0:
+            BMP.addConstr(Y[i,j,t] >= X[i,j,t])
+            # If X turns "on", Y must be 1
+        else:
+            BMP.addConstr(X[i,j,t] - X[i,j,t-1] <= Y[i,j,t])
+
 # Forbid lights being on at the same time as incompatible lights 
 # eg. INT1 NB cannot be on at the same time as INT1 EB. 
-for t in range(sim_length):
-    BMP.addConstr(X["INT1", "NB_LANE_1", t] + X["INT1", "EB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT1", "NB_LANE_1", t] + X["INT1", "EB_LANE_2", t] <= 1)  
-    BMP.addConstr(X["INT1", "NB_LANE_1", t] + X["INT1", "WB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT1", "NB_LANE_1", t] + X["INT1", "WB_LANE_2", t] <= 1) 
+for (i,j) in incompatible_lights.keys():
+    for (k,m) in incompatible_lights[i,j]:
+        for t in range(sim_length):
+            BMP.addConstr(X[i, j, t] + X[k, m, t] <= 1)
 
-    BMP.addConstr(X["INT1", "NB_LANE_2", t] + X["INT1", "EB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT1", "NB_LANE_2", t] + X["INT1", "EB_LANE_2", t] <= 1) 
-    BMP.addConstr(X["INT1", "NB_LANE_2", t] + X["INT1", "WB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT1", "NB_LANE_2", t] + X["INT1", "WB_LANE_2", t] <= 1) 
-    
-    BMP.addConstr(X["INT1", "SB_LANE_1", t] + X["INT1", "EB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT1", "SB_LANE_1", t] + X["INT1", "EB_LANE_2", t] <= 1)  
-    BMP.addConstr(X["INT1", "SB_LANE_1", t] + X["INT1", "WB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT1", "SB_LANE_1", t] + X["INT1", "WB_LANE_2", t] <= 1)      
-    
-    BMP.addConstr(X["INT1", "SB_LANE_2", t] + X["INT1", "EB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT1", "SB_LANE_2", t] + X["INT1", "EB_LANE_2", t] <= 1)  
-    BMP.addConstr(X["INT1", "SB_LANE_2", t] + X["INT1", "WB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT1", "SB_LANE_2", t] + X["INT1", "WB_LANE_2", t] <= 1)  
-      
-    BMP.addConstr(X["INT2", "NB_LANE_1", t] + X["INT2", "EB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT2", "NB_LANE_1", t] + X["INT2", "WB_LANE_1", t] <= 1)    
-    BMP.addConstr(X["INT2", "NB_LANE_2", t] + X["INT2", "EB_LANE_1", t] <= 1) 
-    BMP.addConstr(X["INT2", "NB_LANE_2", t] + X["INT2", "WB_LANE_1", t] <= 1)     
-    
-    BMP.addConstr(X["INT2", "SB_LANE_1", t] + X["INT2", "EB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT2", "SB_LANE_1", t] + X["INT2", "WB_LANE_1", t] <= 1)    
-    BMP.addConstr(X["INT2", "SB_LANE_2", t] + X["INT2", "EB_LANE_1", t] <= 1)  
-    BMP.addConstr(X["INT2", "SB_LANE_2", t] + X["INT2", "WB_LANE_1", t] <= 1)     
-    
-    BMP.addConstr(X["INT3", "NB_LANE_1", t] + X["INT3", "EB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT3", "NB_LANE_1", t] + X["INT3", "WB_LANE_1", t] <= 1)    
-    BMP.addConstr(X["INT3", "NB_LANE_2", t] + X["INT3", "EB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT3", "NB_LANE_2", t] + X["INT3", "WB_LANE_1", t] <= 1) 
-    
-    BMP.addConstr(X["INT3", "SB_LANE_1", t] + X["INT3", "EB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT3", "SB_LANE_1", t] + X["INT3", "WB_LANE_1", t] <= 1)    
-    BMP.addConstr(X["INT3", "SB_LANE_2", t] + X["INT3", "EB_LANE_1", t] <= 1)     
-    BMP.addConstr(X["INT3", "SB_LANE_2", t] + X["INT3", "WB_LANE_1", t] <= 1) 
-    
-    BMP.addConstr(X["INT4", "NB_LANE_2", t] + X["INT4", "EB_LANE_2", t] <= 1)
-    BMP.addConstr(X["INT4", "NB_LANE_2", t] + X["INT4", "WB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT4", "NB_LANE_2", t] + X["INT4", "WB_LANE_2", t] <= 1)
-    
-    BMP.addConstr(X["INT4", "EB_LANE_2", t] + X["INT4", "WB_LANE_1", t] <= 1)
-    BMP.addConstr(X["INT4", "EB_LANE_2", t] + X["INT4", "WB_LANE_2", t] <= 1)
-    
-    BMP.addConstr(X["INT4", "NB_LANE_1", t] + X["INT4", "WB_LANE_1", t] <= 1)
-    
 # Lights cannot be green longer than max_green seconds 
+# i.e., X can only be 1 for a total of max_green time window segments
 for (i,j) in optimised_light_schedule:
     for s in range(sim_length-max_green):
         green_light_max = BMP.addConstr(gp.quicksum(X[i,j,t] for t in range(s,s+max_green+1)) <= max_green)
           
-# Lights must be green for a minimum of min_green seconds (if they're on)      
+# Lights must be green for a minimum of min_green seconds (if they're on) 
+# i.e., if Y=1 within the last 19 seconds, then X at this timestep must also be 1
 for (i,j) in optimised_light_schedule:
-    for s in range(1, sim_length-min_green+1):     
-        BreakLogic = BMP.addConstr(gp.quicksum(X[i,j,t] for t in range(s, s+min_green)) 
-                                    >= min_green*(X[i,j,s] - X[i,j,s-1]))
+    for t in range(sim_length):
+        start_window = max(0, t - min_green + 1)
+        BMP.addConstr(X[i,j,t] >= gp.quicksum(Y[i,j,k] for k in range(start_window, t+1)))
+
+# Lights cannot be turned "on" in the last min_green seconds
+cutoff = sim_length - min_green
+for (i,j) in optimised_light_schedule:
+    for t in range(cutoff + 1, sim_length):
+        BMP.addConstr(Y[i,j,t] == 0)
 
 # All lights must be green for atleast 20% of the total sim length        
 for (i,j) in optimised_light_schedule:
@@ -119,4 +122,3 @@ def Callback(model, where):
                 
 BMP.setParam("LazyConstraints", 1)
 BMP.optimize(Callback)
-BMP.optimize()
