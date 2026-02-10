@@ -85,8 +85,6 @@ def Callback(model, where):
         _i, _v, _r, sim_log, current_score = simulation(current_schedule, vehicles, routes, neighbour_map)
         print(f"\n--- New Potential Schedule Found ---")
         print(f"Simulation Score (Cars Exited): {current_score}")
-        # Force Theta floor to be the current_score from last sim run (cars_exited)
-        # model.cbLazy(Theta >= current_score)
 
         # Build the Hamming Distance Expression
         # Score is capped at current_score unless the schedule is changed
