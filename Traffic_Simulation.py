@@ -222,7 +222,7 @@ def simulation(light_sequence, vehicles_input, routes, neighbour_map):
     
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
-    print(f"Elapsed time: {elapsed_time:.4f} seconds")            
+    # print(f"Elapsed time: {elapsed_time:.4f} seconds")            
     return intersections, vehicles, vehicle_route, sim_log, cars_exited  
 
 if __name__ == "__main__":

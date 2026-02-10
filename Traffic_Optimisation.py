@@ -108,11 +108,18 @@ def Callback(model, where):
                     # Find precantage of time the lane was "on" for
                     current_green_pct = sum(current_schedule[(i,j)]) / sim_length
                     # Set lane "on" time. Cap at 60%
-                    new_min_pct = min(current_green_pct * 1.01, 0.6) 
+                    # new_min_pct = min(current_green_pct * 1.01, 0.6) 
+                    if current_score < 2000:
+                        # Aggressive push to break gridlocks
+                        new_min_pct = min(current_green_pct * 1.20, 0.50) 
+                    else:
+                        # Gentle refinement for high scores
+                        new_min_pct = min(current_green_pct * 1.01, 0.45)
                     
                     # Add feasibility cut
                     model.cbLazy(gp.quicksum(X[i,j,t] for t in range(sim_length)) >= new_min_pct * sim_length)
+                    congestion_cuts_added.add((i,j))
 
 BMP.setParam("LazyConstraints", 1)
+BMP.setParam("Threads", 8)
 BMP.optimize(Callback)
-
