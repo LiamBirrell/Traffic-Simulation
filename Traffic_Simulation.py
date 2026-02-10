@@ -33,6 +33,12 @@ for i in intersections:
                                               *int((T_JUNCTION_REPEATS)/3)    
 
 def simulation(light_sequence, vehicles_input, routes, neighbour_map):
+    # Initialise intersection cells to be 0
+    # so intersections can be reused
+    for i in intersections:
+        for j in intersections[i]["LANES"]:
+            cell_count = len(intersections[i]["LANES"][j]["CELLS"])
+            intersections[i]["LANES"][j]["CELLS"] = [0] * cell_count
     vehicles = copy.deepcopy(vehicles_input)
     start_time = time.perf_counter()
     car_counter = 0
@@ -216,7 +222,7 @@ def simulation(light_sequence, vehicles_input, routes, neighbour_map):
     
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
-    # print(f"Elapsed time: {elapsed_time:.4f} seconds")            
+    print(f"Elapsed time: {elapsed_time:.4f} seconds")            
     return intersections, vehicles, vehicle_route, sim_log, cars_exited  
 
 if __name__ == "__main__":
