@@ -5,5 +5,12 @@
 A discrete time traffic optimisation framework utilising Logic-Based Benders Decomposition. Integrates a Gurobi Master Problem for traffic light schedule generation with a custom simulation Subproblem, using iterative callbacks to converge on optimal traffic light schedule.
 
 TO-DO:
-* Run model till completion or model returns infeasible.
-* add a way to save the best light_schedule if the current_score > cars_exited from default run.
+* find better solutions
+
+### Default Schedule
+![Default Heatmap](default_schedule_heatmap.png)
+![Default Throughput](default_schedule_cars_exited.png)
+
+### Optimal Schedule (10% increase in throughput)
+![Optimized Heatmap](optimised_schedule_heatmap.png)
+![Optimized Throughput](optimised_schedule_cars_exited.png)

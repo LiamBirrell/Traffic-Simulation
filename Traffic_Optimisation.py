@@ -33,6 +33,12 @@ phase_to_lane = {"INT1_NS": [("INT1", "NB_LANE_1"), ("INT1", "NB_LANE_2"),
                  "INT4_WB": [("INT4", "WB_LANE_1"), ("INT4", "WB_LANE_2")]
                  }
 
+intersection_groups = {"INT1": ["INT1_NS", "INT1_EW"],
+                       "INT2": ["INT2_NS", "INT2_EW"],
+                       "INT3": ["INT3_NS", "INT3_EW"],
+                       "INT4": ["INT4_NB", "INT4_EB", "INT4_WB"]
+                       }
+
 lane_to_phase = {lane: phase for phase, lanes in phase_to_lane.items() for lane in lanes}
 
 optimised_light_schedule = {(i,j): [0]*sim_length
@@ -54,8 +60,17 @@ for pi in incompatible_phases.keys():
     for pj in incompatible_phases[pi]:
         for t in range(sim_length):
             BMP.addConstr(X[pi, t] + X[pj, t] <= 1)
-
-
+            
+# 1 phase at each intersection must be on at all times
+for i, group in intersection_groups.items():
+    for t in range(sim_length):
+        if t < sim_length - max_green:
+            # For most of simulation: exactly 1 phase must be on
+            BMP.addConstr(gp.quicksum(X[p, t] for p in group) == 1)
+        else:
+            # For final 90 seconds: at most 1 phase (can be all red)
+            BMP.addConstr(gp.quicksum(X[p, t] for p in group) <= 1)
+        
 # Lights cannot be green longer than max_green seconds 
 for p in phases:
     for s in range(sim_length-max_green):
@@ -66,11 +81,19 @@ for p in phases:
     for s in range(1, sim_length-min_green):
         BMP.addConstr(gp.quicksum(X[p,t] for t in range(s, s+min_green+1)) 
                      >= min_green*(X[p,s] - X[p,s-1]))
+        
+# forbid lights turning green at the end of the simulation
+for p in phases:
+    for s in range(sim_length - min_green + 1, sim_length):
+        BMP.addConstr(X[p,s] - X[p,s-1] <= 0)
 
 lane_increments = {(i,j): 0
                     for (i,j) in optimised_light_schedule}   
  
 highest_percentage = {}
+_i, _v, _r, _s, default_score = simulation(default_light_schedule, vehicles, routes, neighbour_map)
+best_score = 0
+
 def Callback(model, where):
     if where == gp.GRB.Callback.MIPSOL:
         # Get Gurobi's proposed schedule
@@ -84,7 +107,16 @@ def Callback(model, where):
         _i, _v, _r, sim_log, current_score = simulation(current_schedule, vehicles, routes, neighbour_map)
         print(f"\n--- New Potential Schedule Found ---")
         print(f"Simulation Score (Cars Exited): {current_score}")
-
+        print(f"{highest_percentage}")
+        
+        # Check if this is beats the default score by 10%
+        if current_score >= default_score * 1.1:
+            print(f"\n{current_score} is 10% better than {default_score}!")
+            print("Terminating run to save schedule")
+            
+            model._saved_schedule = current_schedule 
+            model.terminate()
+            
         # Build the Hamming Distance Expression
         # Score is capped at current_score unless the schedule is changed
         # by at least 100 seconds (epsilon)
@@ -93,25 +125,33 @@ def Callback(model, where):
         expr_sum_all = gp.quicksum(X.values()) # How many lights are green in next schedule
         expr_sum_active = gp.quicksum(X[k] for k in current_on_keys) # Cancel out lights that stay the same
         dist_expr = val_n_on + expr_sum_all - 2*expr_sum_active # Difference between last schedule and new schedule
-        epsilon = 100
+        # epsilon = 100
         # Add the optimality cut
-        model.cbLazy(Theta <= current_score + (num_vehicles) * (dist_expr / epsilon))
+        # model.cbLazy(Theta <= current_score + (num_vehicles) * (dist_expr / epsilon))
+        model.cbLazy(Theta <= current_score + 14 * dist_expr)
         
         # Congestion cuts
         # If a lane hits 95% capacity at any point in the simulation,
-        # force a higher minimum green-time percentage for that lane.         
+        # force a higher minimum green-time percentage for that lane.             
         for (i,j) in optimised_light_schedule:
             congested_phase = lane_to_phase[(i,j)]
             capacity = len(intersections[i]["LANES"][j]["CELLS"])
-            if any(count >= 0.95 * capacity for count in sim_log["LANE_COUNTS"][(i,j)]):
+            if any(count >= 0.75 * capacity for count in sim_log["LANE_COUNTS"][(i,j)]):
                 
                 # Find precantage of time the lane was "on" for
                 current_green_pct = sum(current_schedule[(i,j)]) / sim_length
-                
-                if "INT4" in congested_phase:
-                    max_cap = 0.30 
-                else:
-                    max_cap = 0.45
+            
+                if i == "INT1" or i == "INT2" or i == "INT3":
+                    if "NS" in congested_phase:
+                        max_cap = 0.70 # Max for main road
+                    else:
+                        max_cap = 0.25 # Max for side street
+                        
+                if i == "INT4":
+                    if "NB" in congested_phase:
+                        max_cap = 0.70 # # Max for main road
+                    else:
+                        max_cap = 0.12 # MMax for side street
                     
                 new_min_pct = min(max(current_green_pct + 0.025, 0.01), max_cap) 
                 # Add feasibility cut if new_min_pct is greater than stored percentage
@@ -123,3 +163,10 @@ def Callback(model, where):
 BMP.setParam("Seed", 97)
 BMP.setParam("LazyConstraints", 1)
 BMP.optimize(Callback)
+                
+if hasattr(BMP, '_saved_schedule'):
+    print("Saving optimal schedule...")
+    optimal_schedule = BMP._saved_schedule
+    
+    with open('optimal_schedule.py', 'w') as f:
+        f.write(f"optimal_schedule = {repr(optimal_schedule)}")

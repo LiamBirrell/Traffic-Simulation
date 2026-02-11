@@ -3,11 +3,12 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 from Traffic_Simulation import *
-# from Traffic_Optimisation import *
+from optimal_schedule import optimal_schedule
 
-intersections, vehicles, vehicle_route, sim_log, cars_exited = simulation(default_light_schedule, vehicles, routes, neighbour_map) 
+_i, _v, _vr, default_sim_log, _ce = simulation(default_light_schedule, vehicles, routes, neighbour_map) 
+_i, _v, _vr, optimised_sim_log, _ce = simulation(optimal_schedule, vehicles, routes, neighbour_map) 
 
-def plot_results(sim_log):
+def plot_results(sim_log, save_name):
     # Graph total number of cars exited
     plt.figure(figsize=(10, 5))
     plt.plot(sim_log["TIME_STEP"], sim_log["CARS_EXITED"], color="r", linewidth=3)
@@ -15,6 +16,7 @@ def plot_results(sim_log):
     plt.xlabel("Time [seconds]")
     plt.ylabel("Total Cars Exited")
     plt.grid(True, linestyle="-")
+    plt.savefig(f"{save_name}_cars_exited.png")
     plt.show()
 
     # Convert Lane density data to spreadsheet for heatmap plot
@@ -35,6 +37,8 @@ def plot_results(sim_log):
     plt.title("Traffic Congestion Heatmap", fontsize=16)
     plt.xlabel("Time (seconds)")
     plt.ylabel("Lane ID")
-    plt.show()
+    plt.savefig(f"{save_name}_heat_map.png")
+    plt.show(sim_log)
 
-plot_results(sim_log)
+plot_results(default_sim_log, "default_schedule")
+plot_results(optimised_sim_log , "optimised_schedule")
