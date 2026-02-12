@@ -8,9 +8,9 @@ TO-DO:
 * find better solutions
 
 ### Default Schedule
-![Default Heatmap](default_schedule_heat_map.png)
-![Default Throughput](default_schedule_cars_exited.png)
+![Default Heatmap](visuals/default_schedule_heat_map.png)
+![Default Throughput](visuals/default_schedule_cars_exited.png)
 
 ### Optimal Schedule (10% increase in throughput)
-![Optimized Heatmap](optimised_schedule_heat_map.png)
-![Optimized Throughput](optimised_schedule_cars_exited.png)
+![Optimized Heatmap](visuals/optimised_schedule_heat_map.png)
+![Optimized Throughput](visuals/optimised_schedule_cars_exited.png)

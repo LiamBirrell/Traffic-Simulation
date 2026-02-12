@@ -133,7 +133,7 @@ def Callback(model, where):
         expr_sum_active = gp.quicksum(X[k] for k in current_on_keys) # Cancel out lights that stay the same
         dist_expr = val_n_on + expr_sum_all - 2*expr_sum_active # Difference between last schedule and new schedule
         # Add the optimality cut
-        model.cbLazy(Theta <= current_score + 14 * dist_expr)
+        model.cbLazy(Theta <= current_score + 50 * dist_expr)
         
         # Congestion cuts
         # If a lane hits 95% capacity at any point in the simulation,
@@ -171,7 +171,8 @@ BMP.optimize(Callback)
                 
 if hasattr(BMP, '_saved_schedule'):
     print("Saving optimal schedule...")
+    save_path = os.path.join(project_root, 'data', 'optimal_schedule.py')
     optimal_schedule = BMP._saved_schedule
     
-    with open('optimal_schedule.py', 'w') as f:
+    with open(save_path, 'w') as f:
         f.write(f"optimal_schedule = {repr(optimal_schedule)}")
