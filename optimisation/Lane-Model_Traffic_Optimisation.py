@@ -1,7 +1,14 @@
 import gurobipy as gp
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+src_path = os.path.join(project_root, 'src')
+if src_path not in sys.path:
+    sys.path.append(src_path)
 from Traffic_Data import *
-from Traffic_Simulation import *
 from Traffic_Generation import *
+from Traffic_Simulation import *
 
 min_green = 20 # seconds
 max_green = 90 # seconds

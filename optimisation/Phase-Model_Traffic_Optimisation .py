@@ -1,7 +1,14 @@
 import gurobipy as gp
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+src_path = os.path.join(project_root, 'src')
+if src_path not in sys.path:
+    sys.path.append(src_path)
 from Traffic_Data import *
-from Traffic_Simulation import *
 from Traffic_Generation import *
+from Traffic_Simulation import *
 
 min_green = 20 # seconds
 max_green = 90 # seconds
@@ -125,9 +132,7 @@ def Callback(model, where):
         expr_sum_all = gp.quicksum(X.values()) # How many lights are green in next schedule
         expr_sum_active = gp.quicksum(X[k] for k in current_on_keys) # Cancel out lights that stay the same
         dist_expr = val_n_on + expr_sum_all - 2*expr_sum_active # Difference between last schedule and new schedule
-        # epsilon = 100
         # Add the optimality cut
-        # model.cbLazy(Theta <= current_score + (num_vehicles) * (dist_expr / epsilon))
         model.cbLazy(Theta <= current_score + 14 * dist_expr)
         
         # Congestion cuts
@@ -151,7 +156,7 @@ def Callback(model, where):
                     if "NB" in congested_phase:
                         max_cap = 0.70 # # Max for main road
                     else:
-                        max_cap = 0.12 # MMax for side street
+                        max_cap = 0.12 # Max for side street
                     
                 new_min_pct = min(max(current_green_pct + 0.025, 0.01), max_cap) 
                 # Add feasibility cut if new_min_pct is greater than stored percentage

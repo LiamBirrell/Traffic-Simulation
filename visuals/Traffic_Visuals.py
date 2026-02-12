@@ -2,6 +2,21 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import numpy as np
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+src_path = os.path.join(project_root, 'src')
+data_path = os.path.join(project_root, 'data')
+
+if src_path not in sys.path:
+    sys.path.append(src_path)
+    
+if data_path not in sys.path:
+    sys.path.append(data_path)
+    
+from Traffic_Data import *
+from Traffic_Generation import *
 from Traffic_Simulation import *
 from optimal_schedule import optimal_schedule
 
