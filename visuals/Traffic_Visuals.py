@@ -20,8 +20,8 @@ from Traffic_Generation import *
 from Traffic_Simulation import *
 from optimal_schedule import optimal_schedule
 
-_i, _v, _vr, default_sim_log, _ce = simulation(default_light_schedule, vehicles, routes, neighbour_map) 
-_i, _v, _vr, optimised_sim_log, _ce = simulation(optimal_schedule, vehicles, routes, neighbour_map) 
+_i, _v, _vr, default_sim_log, default_cars_exited = simulation(default_light_schedule, vehicles, routes, neighbour_map) 
+_i, _v, _vr, optimised_sim_log, optimsied_cars_exited = simulation(optimal_schedule, vehicles, routes, neighbour_map) 
 
 def plot_results(sim_log, save_name):
     # Graph total number of cars exited
