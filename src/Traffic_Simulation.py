@@ -134,6 +134,7 @@ def simulation(light_sequence, vehicles_input, routes, neighbour_map):
                     if "EXT" in destination_lane:
                         intersections[current_int]["LANES"][current_lane]["CELLS"][0] = 0
                         cars_exited += 1
+                        del vehicle_route[i]
                         # print(f"Car Has Exited - Total cars exited = {cars_exited}")
                         continue
                     
@@ -222,7 +223,7 @@ def simulation(light_sequence, vehicles_input, routes, neighbour_map):
     
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
-    # print(f"Elapsed time: {elapsed_time:.4f} seconds")            
+    print(f"Elapsed time: {elapsed_time:.4f} seconds")            
     return intersections, vehicles, vehicle_route, sim_log, cars_exited  
 
 if __name__ == "__main__":
