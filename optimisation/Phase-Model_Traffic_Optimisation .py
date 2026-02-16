@@ -75,7 +75,7 @@ for i, group in intersection_groups.items():
             # For most of simulation: exactly 1 phase must be on
             BMP.addConstr(gp.quicksum(X[p, t] for p in group) == 1)
         else:
-            # For final 90 seconds: at most 1 phase (can be all red)
+            # For final 90 seconds: at most 1 phase can be all red
             BMP.addConstr(gp.quicksum(X[p, t] for p in group) <= 1)
         
 # Lights cannot be green longer than max_green seconds 
@@ -136,7 +136,7 @@ def Callback(model, where):
         model.cbLazy(Theta <= current_score + 50 * dist_expr)
         
         # Congestion cuts
-        # If a lane hits 95% capacity at any point in the simulation,
+        # If a lane hits 75% capacity at any point in the simulation,
         # force a higher minimum green-time percentage for that lane.             
         for (i,j) in optimised_light_schedule:
             congested_phase = lane_to_phase[(i,j)]

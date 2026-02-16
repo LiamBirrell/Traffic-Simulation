@@ -22,7 +22,6 @@ if sum(exit_weights_check.values()) != len(exit_weights_check):
     raise ValueError("Values in exit_lane_weights donot sum to 1\n"\
                       "\t\t\tSee above for Lanes and their summations")
 
-
 def vehicle_generation(entry_lanes, exit_lanes):
     entry_lane_dist = [entry_lanes[i]
                       for i in entry_lanes]
