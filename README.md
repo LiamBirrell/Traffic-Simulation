@@ -2,7 +2,7 @@
 
 A discrete time traffic optimisation framework utilising Logic-Based Benders' Decomposition. Integrates a Gurobi Master Problem for traffic light schedule generation with a custom simulation Subproblem, using iterative callbacks to find an optimal traffic light schedule.
 
-### **Problem Description:**
+# **Problem Description:**
 The goal of this project is to build a "soft digital twin" of a traffic corridor and use mathematical optimisation to find a better traffic light schedule than a standard, static alternating pattern.
 
 The problem is modeled around a specific gridlock scenario with the following parameters:
@@ -19,7 +19,7 @@ The problem is modeled around a specific gridlock scenario with the following pa
 
 **The Objective:** Formulate this environment as a Mixed-Integer Programming (MIP) problem to find a custom schedule that breaks the gridlock and increases vehicle throughput compared to the baseline.
 
-### **Simulation:**
+# **Simulation:**
 To test and score the traffic light schedules, I built a custom Stochastic Cellular Automata engine in Python to act as the environment's "Digital Twin".
 
 The simulation physically tracks individual vehicles across the network using the following logic:
@@ -34,7 +34,7 @@ The simulation physically tracks individual vehicles across the network using th
 
 **The Evaluator:** The simulation serves as the "Subproblem" or scoring mechanism. You feed it a specific traffic light schedule, and it runs all 5,000 cars through the grid physics to output a final score: the exact number of cars that successfully exited the map.
 
-### **Optimisation:**
+# **Optimisation:**
 The core optimisation engine utilises a Logic-Based Benders Decomposition (LBBD) architecture to integrate a Gurobi mathematical solver directly with the stochastic traffic simulation.
 
 **Mathematical Formulation (Overview):**
@@ -55,7 +55,7 @@ The solver navigates the following core logical constraints:
 
 **Feasiblity cut (Congestion Feedback):** The callback actively monitors lane capacities during the simulation. If a lane exceeds 75% capacity, it identifies a severe bottleneck and dynamically injects a feasibility cut. This forces the solver to increase the minimum green time for that specific phase by 2.5% in all future iterations, ensuring the model actively adapts to clear the congestion.
 
-### **Results:**
+# **Results:**
 The solver successfully found a schedule that improves network throughput by 12%.
 
 With the default schedule (fixed 45s/30s rotations), the network struggles to handle the asymmetric rush-hour demand. Severe bottlenecks form and quickly spill backward, locking up the grid and restricting the final throughput to just 2,845 vehicles out of the 5,000 spawned.
@@ -79,5 +79,5 @@ This project shows that optimisation beats fixed timing for complex traffic patt
 
 Better solutions likely exist and letting the solver run for longer would most definetely generate more optimised schedules.
 
-### **TO-DO:**
+# **TO-DO:**
 * find better solutions
