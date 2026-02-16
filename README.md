@@ -62,7 +62,7 @@ With the default schedule (fixed 45s/30s rotations), the network struggles to ha
 
 By using the congestion feedback from the simulation callbacks, the optimisation engine learned to reallocate green time to the heaviest bottlenecks. This prevented the upstream spillback and kept the network flowing, resulting in a final throughput of 3,187 vehicles. This is a 12% increase over the baseline, clearing an extra 342 cars within the exact same 1-hour limit.
 
-**Early Termination (Speed vs. Optimality):** Rather than running the solver for days to prove a global mathematical optimum, the engine is configured to prioritize computational efficiency. The callback is set to automatically terminate the run the moment it evaluates any schedule that improves throughput by at least 10% over the baseline (2845 cars). The 3,187 score (+12%) triggered this early stopping condition.
+**Early Termination (Speed vs. Optimality):** Rather than running the solver for days to prove a global mathematical optimum, the engine is configured to prioritise computational efficiency. The callback is set to automatically terminate the run the moment it evaluates any schedule that improves throughput by at least 10% over the baseline (2845 cars). The 3,187 score (+12%) triggered this early stopping condition.
 
 The visualisations below compare the two runs, showing the reduction in localised gridlock (Heatmaps) and the improved exit rate over time (Throughput).
 
