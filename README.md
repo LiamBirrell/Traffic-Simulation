@@ -35,7 +35,7 @@ The simulation physically tracks individual vehicles across the network using th
 **The Evaluator:** The simulation serves as the "Subproblem" or scoring mechanism. You feed it a specific traffic light schedule, and it runs all 5,000 cars through the grid physics to output a final score: the exact number of cars that successfully exited the map.
 
 # **Optimisation:**
-The core optimisation engine utilises a Logic-Based Benders Decomposition (LBBD) architecture to integrate a Gurobi mathematical solver directly with the stochastic traffic simulation.
+The core optimisation engine utilises a Logic-Based Benders Decomposition (LBBD) architecture to integrate a Gurobi mathematical solver directly with the stochastic traffic simulation. Full mathematical formulation can be found in the documentation/Phase-Model_Formulation.pdf file
 
 **Mathematical Formulation (Overview):**
 The Master Problem is formulated as a Mixed-Integer Linear Program (MILP) which is responsible for constructing the traffic light schedule, with over 32,400 binary decision variables representing the state of every traffic phase at every second. 
