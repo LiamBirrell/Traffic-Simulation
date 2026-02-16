@@ -70,7 +70,7 @@ The visualisations below compare the two runs, showing the reduction in localise
 ![Default Heatmap](visuals/default_schedule_heat_map.png)
 ![Default Throughput](visuals/default_schedule_cars_exited.png)
 
-#### Optimal Schedule (10% increase in throughput):
+#### Optimised Schedule (10% increase in throughput):
 ![Optimised Heatmap](visuals/optimised_schedule_heat_map.png)
 ![Optimised Throughput](visuals/optimised_schedule_cars_exited.png)
 
