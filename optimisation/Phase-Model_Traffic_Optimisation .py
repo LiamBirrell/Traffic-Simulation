@@ -10,8 +10,8 @@ from Traffic_Data import *
 from Traffic_Generation import *
 from Traffic_Simulation import *
 
-min_green = 20 # seconds
-max_green = 90 # seconds
+min_p = 20 # seconds - minimum time a phase can be "on"
+max_p = 90 # seconds - maximum time a phase can be "on"
 
 phases = ["INT1_NS", "INT1_EW", "INT2_NS", "INT2_EW", "INT3_NS", "INT3_EW", 
           "INT4_NB", "INT4_EB", "INT4_WB"]
@@ -71,27 +71,27 @@ for pi in incompatible_phases.keys():
 # 1 phase at each intersection must be on at all times
 for i, group in intersection_groups.items():
     for t in range(sim_length):
-        if t < sim_length - max_green:
+        if t < sim_length - max_p:
             # For most of simulation: exactly 1 phase must be on
             BMP.addConstr(gp.quicksum(X[p, t] for p in group) == 1)
         else:
             # For final 90 seconds: at most 1 phase can be all red
             BMP.addConstr(gp.quicksum(X[p, t] for p in group) <= 1)
         
-# Lights cannot be green longer than max_green seconds 
+# Lights cannot be green longer than max_p seconds 
 for p in phases:
-    for s in range(sim_length-max_green):
-        BMP.addConstr(gp.quicksum(X[p,t] for t in range(s,s+max_green+1)) <= max_green)
+    for s in range(sim_length-max_p):
+        BMP.addConstr(gp.quicksum(X[p,t] for t in range(s,s+max_p+1)) <= max_p)
 
-# Lights must be green for a minimum of min_green seconds
+# Lights must be green for a minimum of min_p seconds
 for p in phases:
-    for s in range(1, sim_length-min_green):
-        BMP.addConstr(gp.quicksum(X[p,t] for t in range(s, s+min_green+1)) 
-                     >= min_green*(X[p,s] - X[p,s-1]))
+    for s in range(1, sim_length-min_p):
+        BMP.addConstr(gp.quicksum(X[p,t] for t in range(s, s+min_p+1)) 
+                     >= min_p*(X[p,s] - X[p,s-1]))
         
 # forbid lights turning green at the end of the simulation
 for p in phases:
-    for s in range(sim_length - min_green + 1, sim_length):
+    for s in range(sim_length - min_p + 1, sim_length):
         BMP.addConstr(X[p,s] - X[p,s-1] <= 0)
 
 lane_increments = {(i,j): 0
@@ -128,10 +128,10 @@ def Callback(model, where):
         # Score is capped at current_score unless the schedule is changed
         # by at least 100 seconds (epsilon)
         current_on_keys = [k for k in X if XV[k] > 0.5] # Identify Green Lights   
-        val_n_on = len(current_on_keys) # How many lights are green in the schedule
-        expr_sum_all = gp.quicksum(X.values()) # How many lights are green in next schedule
-        expr_sum_active = gp.quicksum(X[k] for k in current_on_keys) # Cancel out lights that stay the same
-        dist_expr = val_n_on + expr_sum_all - 2*expr_sum_active # Difference between last schedule and new schedule
+        old_on = len(current_on_keys) # How many lights are green in the old schedule
+        new_on = gp.quicksum(X.values()) # How many lights are green in new schedule
+        matches = gp.quicksum(X[k] for k in current_on_keys) # Cancel out lights that stay the same
+        dist_expr = old_on + new_on - 2*matches # Difference between last schedule and new schedule
         # Add the optimality cut
         model.cbLazy(Theta <= current_score + 50 * dist_expr)
         
@@ -170,9 +170,9 @@ BMP.setParam("LazyConstraints", 1)
 BMP.optimize(Callback)
                 
 if hasattr(BMP, '_saved_schedule'):
-    print("Saving optimal schedule...")
-    save_path = os.path.join(project_root, 'data', 'optimal_schedule.py')
-    optimal_schedule = BMP._saved_schedule
+    print("Saving optimised schedule...")
+    save_path = os.path.join(project_root, 'data', 'optimised_schedule.py')
+    optimised_schedule = BMP._saved_schedule
     
     with open(save_path, 'w') as f:
-        f.write(f"optimal_schedule = {repr(optimal_schedule)}")
+        f.write(f"optimised_schedule = {repr(optimised_schedule)}")

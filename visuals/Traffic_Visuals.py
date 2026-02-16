@@ -19,16 +19,16 @@ if data_path not in sys.path:
 from Traffic_Data import *
 from Traffic_Generation import *
 from Traffic_Simulation import *
-from optimal_schedule import optimal_schedule
+from optimised_schedule import optimised_schedule
 
 _i, _v, _vr, default_sim_log, default_cars_exited = simulation(default_light_schedule, vehicles, routes, neighbour_map) 
-_i, _v, _vr, optimised_sim_log, optimsied_cars_exited = simulation(optimal_schedule, vehicles, routes, neighbour_map) 
+_i, _v, _vr, optimised_sim_log, optimsied_cars_exited = simulation(optimised_schedule, vehicles, routes, neighbour_map) 
 
 def plot_results(sim_log, save_name, intersections_data):
     # Graph total number of cars exited
     plt.figure(figsize=(10, 5))
     plt.plot(sim_log["TIME_STEP"], sim_log["CARS_EXITED"], color="r", linewidth=3)
-    plt.title("Total Throughput Over Time", fontsize=14)
+    plt.title(f"{save_name} - Total Throughput Over Time", fontsize=14)
     plt.xlabel("Time [seconds]")
     plt.ylabel("Total Cars Exited")
     plt.grid(True, linestyle="-")
@@ -59,7 +59,7 @@ def plot_results(sim_log, save_name, intersections_data):
     # Plot the heatmap of lane density per time step
     plt.figure(figsize=(12, 8))
     sns.heatmap(df, cmap="rocket_r", vmin=0, vmax=100, cbar_kws={'label': 'Lane Capacity Filled (%)'})
-    plt.title("Traffic Congestion Heatmap", fontsize=16)
+    plt.title(f"{save_name} - Traffic Congestion Heatmap", fontsize=16)
     plt.xlabel("Time (seconds)")
     plt.ylabel("Lane ID")
     plt.savefig(f"{save_name}_heat_map.png")
